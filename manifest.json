@@ -1,0 +1,29 @@
+{
+  "manifest_version": 3,
+  "name": "X: Enviar mp4",
+  "version": "0.1.0",
+  "description": "Agrega \"Enviar mp4\" al menú de los tweets con video para compartir o descargar el archivo.",
+  "permissions": ["downloads"],
+  "host_permissions": [
+    "https://x.com/*",
+    "https://twitter.com/*",
+    "https://video.twimg.com/*"
+  ],
+  "background": {
+    "service_worker": "src/background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://x.com/*", "https://twitter.com/*"],
+      "js": ["src/parser.js", "src/interceptor.js"],
+      "run_at": "document_start",
+      "world": "MAIN"
+    },
+    {
+      "matches": ["https://x.com/*", "https://twitter.com/*"],
+      "js": ["src/selectors.js", "src/content.js"],
+      "css": ["src/styles.css"],
+      "run_at": "document_start"
+    }
+  ]
+}
